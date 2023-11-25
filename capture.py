@@ -24,22 +24,22 @@ def capture_photo():
     ret, frame = camera.read()
 
     if ret:
-        cv2.imshow('Captured Photo', frame)
+        i = cv2.imread("sample.png")
+        cv2.imshow('Captured Photo', i)
         cv2.destroyAllWindows()
+        gray = cv2.cvtColor(i, cv2.COLOR_BGR2GRAY)
         t = time.time()
-        cv2.imwrite(f'./temp/{t}_u.jpg', frame)
+        cv2.imwrite(f'./temp/{t}_u.jpg', gray)
         fname = f"./temp/{t}_u.jpg"
         img = cv2.imread(fname)
+        """
         resized_img = cv2.resize(img, (640, 480))
         fnamer = f"./temp/{t}.jpg"
         cv2.imwrite(fnamer, resized_img)
-        print(f"Photo captured and saved as '{t}.jpg'")
-        extracted_text = extract_text_from_image(fnamer)
-        if extracted_text:
-            print("Text extracted from the image:")
-            print(extracted_text)
-        else:
-            print("Failed to extract text from the image.")
+        """
+        print(f"Photo captured and saved as '{t}_u.jpg'")
+        extracted_text = extract_text_from_image(fname)
+        return extracted_text
     else:
         print("Error: Couldn't capture photo")
 
